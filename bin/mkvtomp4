@@ -1,0 +1,324 @@
+#!/bin/bash
+
+#    Mkvtomp4: GUI tool for converting mkv files to mp4.
+#    Copyright (C) 2018  Pavel Řehák
+#
+#    This program is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    This program is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+# Version 0.1.5
+
+log=/tmp/mkvtomp4
+log2=/tmp/mkvtomp42
+icon=/usr/share/icons/hicolor/512x512/apps/mkvtomp4.svg
+path=$HOME/
+run=1
+
+touch $log
+touch $log2
+
+
+##############################################################################
+# Gettext
+##############################################################################
+
+. gettext.sh
+
+TEXTDOMAIN=mkvtomp4
+export TEXTDOMAIN
+
+TEXTDOMAINDIR=/usr/share/locale
+export TEXTDOMAINDIR
+
+
+##############################################################################
+#	FUNCTIONS
+##############################################################################
+
+
+select_file()
+{
+mkv_file=$(zenity  --file-selection \
+                   --title="mkvtomp4 - $(gettext 'Choose mkv file')" \
+                   --window-icon="$icon" \
+                   --filename="$path" \
+                   --file-filter="mkv | *.mkv *.mp4")
+if [[ $? -ne 0 ]]
+then
+    exit
+fi
+
+mp4_file0=$(echo "${mkv_file%.*}")
+mp4_file="$mp4_file0".mp4
+file_name=$(echo "${mp4_file##*/}")
+path=$(echo "${mkv_file%/*}/")
+
+# mp4 file choosen
+if [ "$mp4_file" = "$mkv_file" ]
+then
+    zenity --error \
+           --title "mkvtomp4" \
+           --window-icon="$icon" \
+           --text "$(gettext 'Choose mkv file please.')"
+    error=1
+fi
+}
+
+
+select_artwork()
+{
+jpg_file=$(zenity  --file-selection \
+                   --title="mkvtomp4 - $(gettext 'Choose artwork')" \
+                   --filename="$path" \
+                   --window-icon="$icon" \
+                   --file-filter="$(gettext Picture) | *.jpg *.JPG *.png *.PNG")
+if [[ $? -ne 0 ]]
+then
+artwork=0
+else
+artwork=1
+fi
+}
+
+
+select_language()
+{
+# Get info
+info=$(ffprobe "$mkv_file" \
+                    -hide_banner \
+                    -show_entries stream=index,bit_rate,codec_name:stream_tags=language \
+                    -select_streams a \
+                    -of compact=p=0:nk=1)
+info=$(echo $info | sed 's/|/ /g')
+
+# select audio stream
+audio=$(zenity --list \
+               --title="mkvtomp4" \
+               --window-icon="$icon" \
+               --text "$(gettext 'Choose audio')" \
+               --hide-column=1 \
+               --print-column=1,2 \
+               --column "$(gettext Choose)" \
+               --column "$(gettext Codec)" \
+               --column "$(gettext 'Bit rate')" \
+               --column "$(gettext Language)" $info)
+
+if [[ $? -ne 0 ]]
+then
+    error=1
+fi
+
+# get codec and audio
+codec=$(echo "${audio##*|}")
+audio=$(echo "${audio%|*}")
+
+# select video stream
+# head -1 = when more video streams, choose the first one
+# (the artwork is mjpeg - video stream)
+video=$(ffprobe "$mkv_file" \
+                -hide_banner \
+                -show_entries stream=index \
+                -select_streams v \
+                -of compact=p=0:nk=1 | head -1)
+}
+
+
+get_total_time()
+{
+total_time=$(ffprobe "$mkv_file" \
+                     -hide_banner \
+                     -show_entries format=duration \
+                     -of default=nw=1:nk=1)
+total_time=$(echo "${total_time%.*}")
+}
+
+
+progressbar_convert()
+{
+while [[ $percentage -lt 100 ]]
+do
+# Get actual time
+actual_time_log=$(cat $log | tail --bytes=300)
+# Check error (take total time from header)
+time_error=$(echo $actual_time_log | grep -q "time=" && echo $?)
+if [ "$time_error" = "0" ]
+then
+    actual_time=$(echo $actual_time_log | sed 's/.*time=//g' | sed 's/\..*//g' | sed 's/:/ /g')
+    actual_time=( $actual_time )
+    let "actual_time=(10#${actual_time[0]}*3600)+(10#${actual_time[1]}*60)+10#${actual_time[2]}"
+    # Get percentage
+    let "percentage=$actual_time*100/$total_time"
+    echo $percentage
+
+    # Check info
+    convert_info=$(echo $actual_time_log | grep -q "muxing overhead" && echo $?)
+    if [ "$convert_info" = "0" ]
+    then
+        percentage=100
+        echo $percentage
+        convert_info=$(echo $actual_time_log | sed 's/.* \(muxing overhead.*%\)/\1/')
+        notify-send "mkvtomp4" "$(gettext 'Creating file info:')
+$mp4_file
+$convert_info" --icon=$icon
+    fi
+fi
+# ffmpeg is slower when no sleep
+sleep 0.5
+done
+}
+
+
+progressbar()
+{
+pid=$(pgrep ffmpeg | tail -1)
+zenity --progress \
+       --title="mkvtomp4" \
+       --auto-close \
+       --time-remaining \
+       --window-icon="$icon" \
+       --text="$progressbar_text"
+
+if [[ $? -ne 0 ]]
+then
+    kill -2 $pid
+    zenity --error \
+           --title "mkvtomp4" \
+           --window-icon="$icon" \
+           --text "$(gettext 'Converting was stopped.')"
+    killall -3 mkvtomp4
+fi
+}
+
+check_output_file()
+{
+ls "$mp4_file"
+if [[ $? -eq 0 ]]
+then
+    if zenity --question \
+              --title "mkvtomp4" \
+              --window-icon="$icon" \
+              --text "$(eval_gettext "File $file_name exist. Overwrite?")"
+    then
+        :
+    else
+        error=1
+    fi
+fi
+}
+
+
+convert()
+# Repack mkv to mp4, convert ac3 to aac
+# -y = overwrite output file
+{
+progressbar_text="$(gettext Video) $file_name $(gettext 'is converting...')"
+echo "" > $log
+
+if [ "$codec" = "aac" ]
+then
+    ffmpeg -y \
+           -i "$mkv_file" \
+           -map 0:$video -map 0:$audio \
+           -codec copy \
+           "$mp4_file" 2> $log | progressbar_convert | progressbar
+           # 2>&1 | tee $log do not work for long movies
+else
+    ffmpeg -y \
+       -i "$mkv_file" \
+       -hide_banner \
+       -map 0:$video -map 0:$audio \
+       -c:v copy \
+       -c:a aac -b:a 160k -strict -2 \
+       "$mp4_file" 2> $log | progressbar_convert | progressbar
+fi
+}
+
+
+progressbar_picture()
+{
+while [[ $actual_percentage -lt 100 ]]
+do
+# Get actual percentage
+actual_percentage=$(cat $log2 | tail --bytes=200)
+actual_percentage=$(echo $actual_percentage | sed 's/.*>\([0-9]*\)%.*/\1/')
+echo $actual_percentage
+done
+}
+
+
+add_picture()
+{
+# Add picture to mp4 and overwrite output file
+echo "0" > $log2
+
+if [[ $artwork -ne 0 ]]
+then
+progressbar_text="$(gettext 'Adding artwork to') $file_name..."
+AtomicParsley "$mp4_file" \
+              --artwork "$jpg_file" \
+              --overWrite 1> $log2 | progressbar_picture | progressbar
+
+    if [[ $? -ne 0 ]]
+    then
+    zenity --warning \
+           --title "mkvtomp4" \
+           --window-icon="$icon" \
+           --text "$(eval_gettext "File \$mp4_file could not be created.")"
+    else
+    notify_send_ok
+    fi
+
+else
+notify_send_ok
+fi
+}
+
+
+notify_send_ok()
+{
+notify-send "mkvtomp4" "$(eval_gettext "File
+\$mp4_file
+was converted.")" --expire-time=3000 --icon=$icon
+}
+
+
+##############################################################################
+#	PROGRAM
+##############################################################################
+
+
+while [ "$run" = 1 ]
+do
+select_file
+
+if [[ $error -eq 0 ]]
+then
+    select_artwork
+    select_language
+    get_total_time
+fi
+
+if [[ $error -eq 0 ]]
+then
+    check_output_file
+fi
+
+if [[ $error -eq 0 ]]
+then
+    convert && add_picture
+else
+    error=0
+fi
+
+done

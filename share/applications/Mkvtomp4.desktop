@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=mkvtomp4
+Comment=Convert mkv video to mp4
+Exec=mkvtomp4
+Icon=mkvtomp4
+Terminal=false
+Type=Application
+Categories=AudioVideo
+
+Name[cs]=mkvtomp4
+Comment[cs]=Konvertovat mkv video do mp4

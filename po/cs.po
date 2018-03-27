@@ -1,0 +1,94 @@
+# Translation of mkvtomp4 to CZECH.
+# Copyright (C) 2018 Pavel Rehak
+# This file is distributed under the same license as the mkvtomp4 package.
+# Pavel Rehak <pavel-rehak@email.cz>, 2018.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-03-24 15:37+0100\n"
+"PO-Revision-Date: 2018-03-24 15:38+0100\n"
+"Last-Translator: Pavel Rehak <pavel-rehak@email.cz>\n"
+"Language-Team: \n"
+"Language: cs\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.7.1\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+
+#: ../bin/mkvtomp4:54
+msgid "Choose mkv file"
+msgstr "Vyberte mkv soubor"
+
+#: ../bin/mkvtomp4:73
+msgid "Choose mkv file please."
+msgstr "Prosím vyberte mkv soubor."
+
+#: ../bin/mkvtomp4:82
+msgid "Choose artwork"
+msgstr "Vyberte obrázek"
+
+#: ../bin/mkvtomp4:84
+msgid "Picture"
+msgstr "Obrázek"
+
+#: ../bin/mkvtomp4:107
+msgid "Choose audio"
+msgstr "Vyberte audio"
+
+#: ../bin/mkvtomp4:110
+msgid "Choose"
+msgstr "Vybrat"
+
+#: ../bin/mkvtomp4:111
+msgid "Codec"
+msgstr "Kodek"
+
+#: ../bin/mkvtomp4:112
+msgid "Bit rate"
+msgstr "Vzorkovací frekvence"
+
+#: ../bin/mkvtomp4:113
+msgid "Language"
+msgstr "Jazyk"
+
+#: ../bin/mkvtomp4:168
+msgid "Creating file info:"
+msgstr "Informace o vytváření souboru:"
+
+#: ../bin/mkvtomp4:195
+msgid "Converting was stopped."
+msgstr "Konverze byla zastavena."
+
+#: ../bin/mkvtomp4:222
+msgid "Video"
+msgstr "Video"
+
+#: ../bin/mkvtomp4:222
+msgid "is converting..."
+msgstr "se konvertuje..."
+
+#: ../bin/mkvtomp4:260
+msgid "Adding artwork to"
+msgstr "Obrázek se přidává do"
+
+#: ../bin/mkvtomp4:268
+#, sh-format
+msgid "File $mp4_file could not be created."
+msgstr "Soubor $mp4_file nemohl být vytvořen."
+
+#: ../bin/mkvtomp4:281
+#, sh-format
+msgid ""
+"File\n"
+"$mp4_file\n"
+"was converted."
+msgstr ""
+"Soubor\n"
+"$mp4_file\n"
+"byl vytvořen."
+
+#~ msgid "Creating file error"
+#~ msgstr "Chyba při vytváření souboru"
