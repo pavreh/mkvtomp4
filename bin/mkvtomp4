@@ -17,7 +17,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
-# Version 0.1.5
+# Version 0.2.0
 
 log=/tmp/mkvtomp4
 log2=/tmp/mkvtomp42
@@ -92,45 +92,56 @@ fi
 }
 
 
-select_language()
+get_mkv_info()
 {
-# Get info
-info=$(ffprobe "$mkv_file" \
-                    -hide_banner \
-                    -show_entries stream=index,bit_rate,codec_name:stream_tags=language \
-                    -select_streams a \
-                    -of compact=p=0:nk=1)
-info=$(echo $info | sed 's/|/ /g')
+mkv_info=$(ffprobe "$mkv_file" \
+                   -hide_banner \
+                   -show_entries stream=index,codec_type,bit_rate,codec_name:stream_tags=language \
+                   -of compact=p=0:nk=1)
+}
 
-# select audio stream
-audio=$(zenity --list \
+
+select_audio()
+{
+audio=$(echo "$mkv_info" | grep "audio" | sed 's/|/ /g')
+
+# check one or more audio
+items=( $audio )
+items_number=${#items[@]}
+if [[ $items_number -gt 5 ]]
+then
+    # select audio stream
+    audio=$(zenity --list \
                --title="mkvtomp4" \
                --window-icon="$icon" \
                --text "$(gettext 'Choose audio')" \
-               --hide-column=1 \
+               --hide-column=1,3 \
                --print-column=1,2 \
-               --column "$(gettext Choose)" \
+               --column "Choose" \
                --column "$(gettext Codec)" \
+               --column "Codec type" \
                --column "$(gettext 'Bit rate')" \
-               --column "$(gettext Language)" $info)
+               --column "$(gettext Language)" $audio)
 
-if [[ $? -ne 0 ]]
-then
-    error=1
+    if [[ $? -ne 0 ]]
+    then
+        error=1
+    fi
+else
+    audio=${items[0]}"|"${items[1]}
 fi
 
 # get codec and audio
 codec=$(echo "${audio##*|}")
 audio=$(echo "${audio%|*}")
+}
 
-# select video stream
+
+select_video()
+{
 # head -1 = when more video streams, choose the first one
 # (the artwork is mjpeg - video stream)
-video=$(ffprobe "$mkv_file" \
-                -hide_banner \
-                -show_entries stream=index \
-                -select_streams v \
-                -of compact=p=0:nk=1 | head -1)
+video=$(echo "$mkv_info" | grep "video" | head -1 | sed 's/|.*//g')
 }
 
 
@@ -168,8 +179,7 @@ then
         percentage=100
         echo $percentage
         convert_info=$(echo $actual_time_log | sed 's/.* \(muxing overhead.*%\)/\1/')
-        notify-send "mkvtomp4" "$(gettext 'Creating file info:')
-$mp4_file
+        notify-send "$(gettext 'Creating file info:')" "$mp4_file
 $convert_info" --icon=$icon
     fi
 fi
@@ -199,6 +209,7 @@ then
     killall -3 mkvtomp4
 fi
 }
+
 
 check_output_file()
 {
@@ -287,7 +298,7 @@ fi
 
 notify_send_ok()
 {
-notify-send "mkvtomp4" "$(eval_gettext "File
+notify-send "$(gettext 'Video conversion completed')" "$(eval_gettext "File
 \$mp4_file
 was converted.")" --expire-time=3000 --icon=$icon
 }
@@ -305,7 +316,9 @@ select_file
 if [[ $error -eq 0 ]]
 then
     select_artwork
-    select_language
+    get_mkv_info
+    select_audio
+    select_video
     get_total_time
 fi
 

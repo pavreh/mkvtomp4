@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-24 15:37+0100\n"
-"PO-Revision-Date: 2018-03-24 15:38+0100\n"
+"POT-Creation-Date: 2018-04-07 09:23+0200\n"
+"PO-Revision-Date: 2018-04-04 23:28+0200\n"
 "Last-Translator: Pavel Rehak <pavel-rehak@email.cz>\n"
 "Language-Team: \n"
 "Language: cs\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Generator: Poedit 1.8.7.1\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: ../bin/mkvtomp4:54
+#: ../bin/mkvtomp4:53
 msgid "Choose mkv file"
 msgstr "Vyberte mkv soubor"
 
@@ -30,56 +30,56 @@ msgstr "Prosím vyberte mkv soubor."
 msgid "Choose artwork"
 msgstr "Vyberte obrázek"
 
-#: ../bin/mkvtomp4:84
+#: ../bin/mkvtomp4:85
 msgid "Picture"
 msgstr "Obrázek"
 
-#: ../bin/mkvtomp4:107
+#: ../bin/mkvtomp4:117
 msgid "Choose audio"
 msgstr "Vyberte audio"
 
-#: ../bin/mkvtomp4:110
-msgid "Choose"
-msgstr "Vybrat"
-
-#: ../bin/mkvtomp4:111
+#: ../bin/mkvtomp4:121
 msgid "Codec"
 msgstr "Kodek"
 
-#: ../bin/mkvtomp4:112
+#: ../bin/mkvtomp4:123
 msgid "Bit rate"
 msgstr "Vzorkovací frekvence"
 
-#: ../bin/mkvtomp4:113
+#: ../bin/mkvtomp4:124
 msgid "Language"
 msgstr "Jazyk"
 
-#: ../bin/mkvtomp4:168
+#: ../bin/mkvtomp4:182
 msgid "Creating file info:"
 msgstr "Informace o vytváření souboru:"
 
-#: ../bin/mkvtomp4:195
+#: ../bin/mkvtomp4:208
 msgid "Converting was stopped."
 msgstr "Konverze byla zastavena."
 
-#: ../bin/mkvtomp4:222
+#: ../bin/mkvtomp4:236
 msgid "Video"
 msgstr "Video"
 
-#: ../bin/mkvtomp4:222
+#: ../bin/mkvtomp4:236
 msgid "is converting..."
 msgstr "se konvertuje..."
 
-#: ../bin/mkvtomp4:260
+#: ../bin/mkvtomp4:278
 msgid "Adding artwork to"
 msgstr "Obrázek se přidává do"
 
-#: ../bin/mkvtomp4:268
+#: ../bin/mkvtomp4:288
 #, sh-format
 msgid "File $mp4_file could not be created."
 msgstr "Soubor $mp4_file nemohl být vytvořen."
 
-#: ../bin/mkvtomp4:281
+#: ../bin/mkvtomp4:301
+msgid "Video conversion completed"
+msgstr "Konverze videa dokončena"
+
+#: ../bin/mkvtomp4:301
 #, sh-format
 msgid ""
 "File\n"
@@ -89,6 +89,9 @@ msgstr ""
 "Soubor\n"
 "$mp4_file\n"
 "byl vytvořen."
+
+#~ msgid "Choose"
+#~ msgstr "Vybrat"
 
 #~ msgid "Creating file error"
 #~ msgstr "Chyba při vytváření souboru"

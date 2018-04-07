@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-03-24 15:37+0100\n"
+"POT-Creation-Date: 2018-04-07 09:23+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../bin/mkvtomp4:54
+#: ../bin/mkvtomp4:53
 msgid "Choose mkv file"
 msgstr ""
 
@@ -29,56 +29,56 @@ msgstr ""
 msgid "Choose artwork"
 msgstr ""
 
-#: ../bin/mkvtomp4:84
+#: ../bin/mkvtomp4:85
 msgid "Picture"
 msgstr ""
 
-#: ../bin/mkvtomp4:107
+#: ../bin/mkvtomp4:117
 msgid "Choose audio"
 msgstr ""
 
-#: ../bin/mkvtomp4:110
-msgid "Choose"
-msgstr ""
-
-#: ../bin/mkvtomp4:111
+#: ../bin/mkvtomp4:121
 msgid "Codec"
 msgstr ""
 
-#: ../bin/mkvtomp4:112
+#: ../bin/mkvtomp4:123
 msgid "Bit rate"
 msgstr ""
 
-#: ../bin/mkvtomp4:113
+#: ../bin/mkvtomp4:124
 msgid "Language"
 msgstr ""
 
-#: ../bin/mkvtomp4:168
+#: ../bin/mkvtomp4:182
 msgid "Creating file info:"
 msgstr ""
 
-#: ../bin/mkvtomp4:195
+#: ../bin/mkvtomp4:208
 msgid "Converting was stopped."
 msgstr ""
 
-#: ../bin/mkvtomp4:222
+#: ../bin/mkvtomp4:236
 msgid "Video"
 msgstr ""
 
-#: ../bin/mkvtomp4:222
+#: ../bin/mkvtomp4:236
 msgid "is converting..."
 msgstr ""
 
-#: ../bin/mkvtomp4:260
+#: ../bin/mkvtomp4:278
 msgid "Adding artwork to"
 msgstr ""
 
-#: ../bin/mkvtomp4:268
+#: ../bin/mkvtomp4:288
 #, sh-format
 msgid "File $mp4_file could not be created."
 msgstr ""
 
-#: ../bin/mkvtomp4:281
+#: ../bin/mkvtomp4:301
+msgid "Video conversion completed"
+msgstr ""
+
+#: ../bin/mkvtomp4:301
 #, sh-format
 msgid ""
 "File\n"
