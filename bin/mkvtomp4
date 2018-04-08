@@ -99,7 +99,7 @@ get_mkv_info()
 {
 mkv_info=$(ffprobe "$mkv_file" \
                    -hide_banner \
-                   -show_entries stream=index,codec_type,bit_rate,codec_name:stream_tags=language \
+                   -show_entries stream=index,codec_type,bit_rate,codec_name,channels:stream_tags=language \
                    -of compact=p=0:nk=1)
 }
 
@@ -118,11 +118,12 @@ then
                    --title="mkvtomp4" \
                    --window-icon="$icon" \
                    --text "$(gettext 'Choose audio')" \
-                   --hide-column=1,3 \
-                   --print-column=1,2 \
+                   --hide-column=1,3,4 \
+                   --print-column=1,2,4 \
                    --column "Choose" \
                    --column "$(gettext Codec)" \
                    --column "Codec type" \
+                   --column "Channels" \
                    --column "$(gettext 'Bit rate')" \
                    --column "$(gettext Language)" $audio)
 
@@ -132,12 +133,15 @@ then
         error=1
     fi
 else
-    audio=${items[0]}"|"${items[1]}
+    audio=${items[0]}"|"${items[1]}"|"${items[3]}
 fi
 
-# get codec and audio
-codec=$(echo "${audio##*|}")
-audio=$(echo "${audio%|*}")
+# get codec, audio, channels
+audio=$(echo "$audio" | sed 's/|/ /g')
+audio=( $audio )
+codec=${audio[1]}
+channels=${audio[2]}
+audio=${audio[0]}
 }
 
 
@@ -240,24 +244,21 @@ convert()
 progressbar_text="$(gettext Video) $file_name $(gettext 'is converting...')"
 echo "" > $log
 
-if [ "$codec" = "aac" ]
+if [ "$codec" = "aac" ] && [ "$channels" = "2" ]
 then
-    ffmpeg -y \
-           -i "$mkv_file" \
-           -map 0:$video -map 0:$audio \
-           -codec copy \
-           "$mp4_file" 2> $log | progressbar_convert | progressbar
-           # 2>&1 | tee $log do not work for long movies
-           # only stereo aac will playable
+    parameter="-codec copy"
 else
-    ffmpeg -y \
-           -i "$mkv_file" \
-           -hide_banner \
-           -map 0:$video -map 0:$audio \
-           -c:v copy \
-           -c:a aac -b:a 160k -ac 2 -strict -2 \
-           "$mp4_file" 2> $log | progressbar_convert | progressbar
+    # only stereo aac will playable
+    parameter="-c:v copy -c:a aac -b:a 160k -ac 2 -strict -2"
 fi
+
+ffmpeg -y \
+       -i "$mkv_file" \
+       -hide_banner \
+       -map 0:$video -map 0:$audio \
+       $parameter \
+       "$mp4_file" 2> $log | progressbar_convert | progressbar
+       # 2>&1 | tee $log do not work for long movies
 }
 
 
