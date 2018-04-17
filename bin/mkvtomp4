@@ -16,6 +16,7 @@
 #    You should have received a copy of the GNU General Public License
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+version=0.3.1
 
 
 log=/tmp/mkvtomp4
@@ -225,7 +226,7 @@ then
     if ! zenity --question \
                 --title "mkvtomp4" \
                 --window-icon="$icon" \
-                --text "$(eval_gettext "File $file_name exist. Overwrite?")"
+                --text "$(eval_gettext "File \$file_name exist. Overwrite?")"
     then
         error=1
     fi
@@ -333,6 +334,28 @@ was converted.")" --expire-time=3000 --icon=$icon
 #	PROGRAM
 ##############################################################################
 
+# Parameters
+while [ $# -gt 0 ]
+do
+    case "$1" in
+        --version | -v )
+            echo "mkvtomp4 version $version"
+            exit
+            ;;
+
+        --help | -h )
+            echo "mkvtomp4 - GUI tool for converting mkv files to mp4"
+            echo " "
+            echo "usage: mkvtomp4 [option]"
+            echo " "
+            echo "options:"
+            echo "  -h, --help                show this help"
+            echo "  -v, --version             print version number"
+            exit
+            ;;
+    esac
+    shift
+done
 
 while [ "$run" = 1 ]
 do

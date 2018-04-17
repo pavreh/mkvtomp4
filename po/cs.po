@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-08 17:06+0200\n"
-"PO-Revision-Date: 2018-04-08 17:08+0200\n"
+"POT-Creation-Date: 2018-04-17 20:21+0200\n"
+"PO-Revision-Date: 2018-04-17 20:22+0200\n"
 "Last-Translator: Pavel Rehak <pavel-rehak@email.cz>\n"
 "Language-Team: \n"
 "Language: cs\n"
@@ -18,59 +18,64 @@ msgstr ""
 "X-Generator: Poedit 1.8.7.1\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: ../bin/mkvtomp4:52
+#: ../bin/mkvtomp4:53
 msgid "Choose mkv file"
 msgstr "Vyberte mkv soubor"
 
-#: ../bin/mkvtomp4:74
+#: ../bin/mkvtomp4:75
 msgid "Choose mkv file please."
 msgstr "Prosím vyberte mkv soubor."
 
-#: ../bin/mkvtomp4:83
+#: ../bin/mkvtomp4:84
 msgid "Choose artwork"
 msgstr "Vyberte obrázek"
 
-#: ../bin/mkvtomp4:86
+#: ../bin/mkvtomp4:87
 msgid "Picture"
 msgstr "Obrázek"
 
-#: ../bin/mkvtomp4:120
+#: ../bin/mkvtomp4:121
 msgid "Choose audio"
 msgstr "Vyberte audio"
 
-#: ../bin/mkvtomp4:128
+#: ../bin/mkvtomp4:129
 msgid "Language"
 msgstr "Jazyk"
 
-#: ../bin/mkvtomp4:190
+#: ../bin/mkvtomp4:191
 msgid "Creating file info:"
 msgstr "Informace o vytváření souboru:"
 
-#: ../bin/mkvtomp4:240
+#: ../bin/mkvtomp4:229
+#, sh-format
+msgid "File $file_name exist. Overwrite?"
+msgstr "Soubor $file_name existuje. Přepsat?"
+
+#: ../bin/mkvtomp4:241
 msgid "Video"
 msgstr "Video"
 
-#: ../bin/mkvtomp4:240
+#: ../bin/mkvtomp4:241
 msgid "is converting..."
 msgstr "se konvertuje..."
 
-#: ../bin/mkvtomp4:264
+#: ../bin/mkvtomp4:265
 msgid "Converting was aborted."
 msgstr "Konverze byla zrušena."
 
-#: ../bin/mkvtomp4:308
+#: ../bin/mkvtomp4:309
 msgid "Adding artwork to"
 msgstr "Obrázek se přidává do"
 
-#: ../bin/mkvtomp4:318
+#: ../bin/mkvtomp4:319
 msgid "Artwork was not added."
 msgstr "Obrázek se nevložil."
 
-#: ../bin/mkvtomp4:326
+#: ../bin/mkvtomp4:327
 msgid "Video conversion completed"
 msgstr "Konverze videa dokončena"
 
-#: ../bin/mkvtomp4:326
+#: ../bin/mkvtomp4:327
 #, sh-format
 msgid ""
 "File\n"
