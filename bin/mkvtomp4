@@ -21,6 +21,7 @@ version=0.3.1
 
 log_file=/tmp/mkvtomp4
 log2_file=/tmp/mkvtomp42
+LOCKDIR=/tmp/mkvtomp4_lock
 icon=/usr/share/icons/hicolor/512x512/apps/mkvtomp4.svg
 path=$HOME/
 title='mkvtomp4'
@@ -61,7 +62,8 @@ mkv_file=$(zenity  --file-selection \
 # exit when cancel
 if [[ $? -ne 0 ]]
 then
-    exit
+    error=1
+    run=0
 fi
 
 mp4_file0=$(echo "${mkv_file%.*}")
@@ -360,34 +362,49 @@ do
     shift
 done
 
-while [ "$run" = 1 ]
-do
-select_file
-
-if [[ $error -eq 0 ]]
+#  only one instance of the mkvtomp4
+if mkdir $LOCKDIR
 then
-    select_artwork
-    get_mkv_info
-    select_audio
-    select_video
-    get_total_time
+    while [ "$run" = 1 ]
+    do
+        select_file
+
+        if [[ $error -eq 0 ]]
+        then
+            select_artwork
+            get_mkv_info
+            select_audio
+            select_video
+            get_total_time
+        fi
+
+        if [[ $error -eq 0 ]]
+        then
+            check_output_file
+        fi
+
+        if [[ $error -eq 0 ]]
+        then
+            convert && add_picture
+        fi
+
+        if [[ $error -eq 0 ]]
+        then
+            notify_send_ok
+        fi
+
+        error=0
+    done
+
+    if ! rmdir $LOCKDIR
+    then
+        echo "Could not remove lock dir" >&2
+    fi
+else
+    # second instance
+    zenity --error \
+           --title "$title" \
+           --text "$(gettext 'Only one instance of mkvtomp4 is permitted.')" \
+             $zenity_settings
 fi
 
-if [[ $error -eq 0 ]]
-then
-    check_output_file
-fi
-
-if [[ $error -eq 0 ]]
-then
-    convert && add_picture
-fi
-
-if [[ $error -eq 0 ]]
-then
-    notify_send_ok
-fi
-
-error=0
-
-done
