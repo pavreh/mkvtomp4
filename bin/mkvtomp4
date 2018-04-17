@@ -74,10 +74,8 @@ path=$(echo "${mkv_file%/*}/")
 # mp4 file choosen
 if [ "$mp4_file" = "$mkv_file" ]
 then
-    zenity --error \
-           --title="$title" \
-           --text="$(gettext 'Choose mkv file please.')" \
-             $zenity_settings
+    zenity_text="$(gettext 'Choose mkv file please.')"
+    zenity_error
     error=1
 fi
 }
@@ -264,10 +262,8 @@ ffmpeg -y \
 
 if [[ $? -ne 0 ]]
 then
-    zenity --error \
-           --title "$title" \
-           --text "$(gettext 'Converting was aborted.')" \
-             $zenity_settings
+    zenity_text="$(gettext 'Converting was aborted.')"
+    zenity_error
     error=1
 fi
 }
@@ -318,10 +314,8 @@ then
 
     if [[ $? -ne 0 ]]
     then
-        zenity --warning \
-               --title "$title" \
-               --text "$(gettext 'Artwork was not added.')" \
-                 $zenity_settings
+        zenity_text="$(gettext 'Artwork was not added.')"
+        zenity_warning
     fi
 fi
 }
@@ -332,6 +326,21 @@ notify_send_ok()
 notify-send "$(gettext 'Video conversion completed')" "$(eval_gettext "File
 \$mp4_file
 was converted.")" --expire-time=3000 --icon=$icon
+}
+
+
+#	WARNINGS
+##############################################################################
+
+zenity_warning()
+{
+zenity --warning --title="$title" --text="$zenity_text" $zenity_settings
+}
+
+
+zenity_error()
+{
+zenity --error --title="$title" --text="$zenity_text" $zenity_settings
 }
 
 
@@ -402,9 +411,7 @@ then
     fi
 else
     # second instance
-    zenity --error \
-           --title "$title" \
-           --text "$(gettext 'Only one instance of mkvtomp4 is permitted.')" \
-             $zenity_settings
+    zenity_text="$(gettext 'Only one instance of mkvtomp4 is permitted.')"
+    zenity_error
 fi
 
