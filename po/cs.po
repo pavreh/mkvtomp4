@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-17 20:21+0200\n"
-"PO-Revision-Date: 2018-04-17 20:22+0200\n"
+"POT-Creation-Date: 2018-04-17 23:54+0200\n"
+"PO-Revision-Date: 2018-04-17 23:56+0200\n"
 "Last-Translator: Pavel Rehak <pavel-rehak@email.cz>\n"
 "Language-Team: \n"
 "Language: cs\n"
@@ -18,44 +18,44 @@ msgstr ""
 "X-Generator: Poedit 1.8.7.1\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: ../bin/mkvtomp4:53
+#: ../bin/mkvtomp4:57
 msgid "Choose mkv file"
 msgstr "Vyberte mkv soubor"
 
-#: ../bin/mkvtomp4:75
+#: ../bin/mkvtomp4:77
 msgid "Choose mkv file please."
 msgstr "Prosím vyberte mkv soubor."
 
-#: ../bin/mkvtomp4:84
+#: ../bin/mkvtomp4:87
 msgid "Choose artwork"
 msgstr "Vyberte obrázek"
 
-#: ../bin/mkvtomp4:87
+#: ../bin/mkvtomp4:90
 msgid "Picture"
 msgstr "Obrázek"
 
-#: ../bin/mkvtomp4:121
+#: ../bin/mkvtomp4:123
 msgid "Choose audio"
 msgstr "Vyberte audio"
 
-#: ../bin/mkvtomp4:129
+#: ../bin/mkvtomp4:131
 msgid "Language"
 msgstr "Jazyk"
 
-#: ../bin/mkvtomp4:191
+#: ../bin/mkvtomp4:194
 msgid "Creating file info:"
 msgstr "Informace o vytváření souboru:"
 
-#: ../bin/mkvtomp4:229
+#: ../bin/mkvtomp4:231
 #, sh-format
 msgid "File $file_name exist. Overwrite?"
 msgstr "Soubor $file_name existuje. Přepsat?"
 
-#: ../bin/mkvtomp4:241
+#: ../bin/mkvtomp4:244
 msgid "Video"
 msgstr "Video"
 
-#: ../bin/mkvtomp4:241
+#: ../bin/mkvtomp4:244
 msgid "is converting..."
 msgstr "se konvertuje..."
 
@@ -63,19 +63,19 @@ msgstr "se konvertuje..."
 msgid "Converting was aborted."
 msgstr "Konverze byla zrušena."
 
-#: ../bin/mkvtomp4:309
+#: ../bin/mkvtomp4:310
 msgid "Adding artwork to"
 msgstr "Obrázek se přidává do"
 
-#: ../bin/mkvtomp4:319
+#: ../bin/mkvtomp4:317
 msgid "Artwork was not added."
 msgstr "Obrázek se nevložil."
 
-#: ../bin/mkvtomp4:327
+#: ../bin/mkvtomp4:326
 msgid "Video conversion completed"
 msgstr "Konverze videa dokončena"
 
-#: ../bin/mkvtomp4:327
+#: ../bin/mkvtomp4:326
 #, sh-format
 msgid ""
 "File\n"
@@ -85,6 +85,10 @@ msgstr ""
 "Soubor\n"
 "$mp4_file\n"
 "byl vytvořen."
+
+#: ../bin/mkvtomp4:414
+msgid "Only one instance of mkvtomp4 is permitted."
+msgstr "Mkvtomp4 může být spuštěn jen jednou."
 
 #~ msgid "Codec"
 #~ msgstr "Kodek"

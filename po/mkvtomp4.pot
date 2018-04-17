@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-04-17 20:21+0200\n"
+"POT-Creation-Date: 2018-04-17 23:54+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,44 +17,44 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../bin/mkvtomp4:53
+#: ../bin/mkvtomp4:57
 msgid "Choose mkv file"
 msgstr ""
 
-#: ../bin/mkvtomp4:75
+#: ../bin/mkvtomp4:77
 msgid "Choose mkv file please."
 msgstr ""
 
-#: ../bin/mkvtomp4:84
+#: ../bin/mkvtomp4:87
 msgid "Choose artwork"
 msgstr ""
 
-#: ../bin/mkvtomp4:87
+#: ../bin/mkvtomp4:90
 msgid "Picture"
 msgstr ""
 
-#: ../bin/mkvtomp4:121
+#: ../bin/mkvtomp4:123
 msgid "Choose audio"
 msgstr ""
 
-#: ../bin/mkvtomp4:129
+#: ../bin/mkvtomp4:131
 msgid "Language"
 msgstr ""
 
-#: ../bin/mkvtomp4:191
+#: ../bin/mkvtomp4:194
 msgid "Creating file info:"
 msgstr ""
 
-#: ../bin/mkvtomp4:229
+#: ../bin/mkvtomp4:231
 #, sh-format
 msgid "File $file_name exist. Overwrite?"
 msgstr ""
 
-#: ../bin/mkvtomp4:241
+#: ../bin/mkvtomp4:244
 msgid "Video"
 msgstr ""
 
-#: ../bin/mkvtomp4:241
+#: ../bin/mkvtomp4:244
 msgid "is converting..."
 msgstr ""
 
@@ -62,22 +62,26 @@ msgstr ""
 msgid "Converting was aborted."
 msgstr ""
 
-#: ../bin/mkvtomp4:309
+#: ../bin/mkvtomp4:310
 msgid "Adding artwork to"
 msgstr ""
 
-#: ../bin/mkvtomp4:319
+#: ../bin/mkvtomp4:317
 msgid "Artwork was not added."
 msgstr ""
 
-#: ../bin/mkvtomp4:327
+#: ../bin/mkvtomp4:326
 msgid "Video conversion completed"
 msgstr ""
 
-#: ../bin/mkvtomp4:327
+#: ../bin/mkvtomp4:326
 #, sh-format
 msgid ""
 "File\n"
 "$mp4_file\n"
 "was converted."
+msgstr ""
+
+#: ../bin/mkvtomp4:414
+msgid "Only one instance of mkvtomp4 is permitted."
 msgstr ""
