@@ -19,14 +19,17 @@
 version=0.3.1
 
 
-log=/tmp/mkvtomp4
-log2=/tmp/mkvtomp42
+log_file=/tmp/mkvtomp4
+log2_file=/tmp/mkvtomp42
 icon=/usr/share/icons/hicolor/512x512/apps/mkvtomp4.svg
 path=$HOME/
+title='mkvtomp4'
+zenity_settings="--window-icon=$icon --width=330 --height=200"
+
 run=1
 
-touch $log
-touch $log2
+touch $log_file
+touch $log2_file
 
 
 ##############################################################################
@@ -50,7 +53,7 @@ export TEXTDOMAINDIR
 select_file()
 {
 mkv_file=$(zenity  --file-selection \
-                   --title="mkvtomp4 - $(gettext 'Choose mkv file')" \
+                   --title="$title - $(gettext 'Choose mkv file')" \
                    --window-icon="$icon" \
                    --filename="$path" \
                    --file-filter="mkv | *.mkv *.mp4")
@@ -70,9 +73,9 @@ path=$(echo "${mkv_file%/*}/")
 if [ "$mp4_file" = "$mkv_file" ]
 then
     zenity --error \
-           --title "mkvtomp4" \
-           --window-icon="$icon" \
-           --text "$(gettext 'Choose mkv file please.')"
+           --title="$title" \
+           --text="$(gettext 'Choose mkv file please.')" \
+             $zenity_settings
     error=1
 fi
 }
@@ -81,7 +84,7 @@ fi
 select_artwork()
 {
 jpg_file=$(zenity  --file-selection \
-                   --title="mkvtomp4 - $(gettext 'Choose artwork')" \
+                   --title="$title - $(gettext 'Choose artwork')" \
                    --filename="$path" \
                    --window-icon="$icon" \
                    --file-filter="$(gettext Picture) | *.jpg *.JPG *.png *.PNG")
@@ -116,8 +119,7 @@ if [[ $items_number -gt 5 ]]
 then
     # select audio stream
     audio=$(zenity --list \
-                   --title="mkvtomp4" \
-                   --window-icon="$icon" \
+                   --title="$title" \
                    --text "$(gettext 'Choose audio')" \
                    --hide-column=1,2,3,4,5 \
                    --print-column=1,2,4 \
@@ -126,7 +128,8 @@ then
                    --column "Codec type" \
                    --column "Channels" \
                    --column "Bit rate" \
-                   --column "$(gettext Language)" $audio)
+                   --column "$(gettext Language)" $audio \
+                     $zenity_settings )
 
     # restart the app when cancel
     if [[ $? -ne 0 ]]
@@ -169,7 +172,7 @@ progressbar_convert()
 while [[ $percentage -lt 100 ]]
 do
 # Get actual time
-actual_time_log=$(cat $log | tail --bytes=300)
+actual_time_log=$(cat $log_file | tail --bytes=300)
 # Check error (take total time from header)
 time_error=$(echo $actual_time_log | grep -q "time=" && echo $?)
 if [ "$time_error" = "0" ]
@@ -202,18 +205,18 @@ progressbar_ffmpeg()
 {
 pid=$(pgrep ffmpeg | tail -1)
 zenity --progress \
-       --title="mkvtomp4" \
+       --title="$title" \
        --auto-close \
        --time-remaining \
-       --window-icon="$icon" \
-       --text="$progressbar_text"
+       --text="$progressbar_text" \
+         $zenity_settings
 
 if [[ $? -ne 0 ]]
 then
     error=1
     kill -2 $pid
     rm "$mp4_file"
-    killall -3 mkvtomp4
+    killall -3 $title
 fi
 }
 
@@ -224,9 +227,9 @@ ls "$mp4_file"
 if [[ $? -eq 0 ]]
 then
     if ! zenity --question \
-                --title "mkvtomp4" \
-                --window-icon="$icon" \
-                --text "$(eval_gettext "File \$file_name exist. Overwrite?")"
+                --title "$title" \
+                --text "$(eval_gettext "File \$file_name exist. Overwrite?")" \
+                  $zenity_settings
     then
         error=1
     fi
@@ -239,7 +242,7 @@ convert()
 # -y = overwrite output file
 {
 progressbar_text="$(gettext Video) $file_name $(gettext 'is converting...')"
-echo "" > $log
+echo "" > $log_file
 
 if [ "$codec" = "aac" ] && [ "$channels" = "2" ]
 then
@@ -254,15 +257,15 @@ ffmpeg -y \
        -hide_banner \
        -map 0:$video -map 0:$audio \
        $parameter \
-       "$mp4_file" 2> $log | progressbar_convert | progressbar_ffmpeg
-       # 2>&1 | tee $log do not work for long movies
+       "$mp4_file" 2> $log_file | progressbar_convert | progressbar_ffmpeg
+       # 2>&1 | tee $log_file do not work for long movies
 
 if [[ $? -ne 0 ]]
 then
     zenity --error \
-           --title "mkvtomp4" \
-           --window-icon="$icon" \
-           --text "$(gettext 'Converting was aborted.')"
+           --title "$title" \
+           --text "$(gettext 'Converting was aborted.')" \
+             $zenity_settings
     error=1
 fi
 }
@@ -273,7 +276,7 @@ progressbar_picture()
 while [[ $actual_percentage -lt 100 ]]
 do
     # Get actual percentage
-    actual_percentage=$(cat $log2 | tail --bytes=200)
+    actual_percentage=$(cat $log2_file | tail --bytes=200)
     actual_percentage=$(echo $actual_percentage | sed 's/.*>\([0-9]*\)%.*/\1/')
     echo $actual_percentage
 done
@@ -284,17 +287,17 @@ progressbar_AtomicParsley()
 {
 pid=$(pgrep AtomicParsley | tail -1)
 zenity --progress \
-       --title="mkvtomp4" \
+       --title="$title" \
        --auto-close \
        --time-remaining \
-       --window-icon="$icon" \
-       --text="$progressbar_text"
+       --text="$progressbar_text" \
+         $zenity_settings
 
 if [[ $? -ne 0 ]]
 then
     error=1
     kill -2 $pid
-    killall -3 mkvtomp4
+    killall -3 $title
 fi
 }
 
@@ -302,21 +305,21 @@ fi
 add_picture()
 {
 # Add picture to mp4 and overwrite output file
-echo "0" > $log2
+echo "0" > $log2_file
 
 if [[ $artwork -ne 0 ]]
 then
     progressbar_text="$(gettext 'Adding artwork to') $file_name..."
     AtomicParsley "$mp4_file" \
                   --artwork "$jpg_file" \
-                  --overWrite 1> $log2 | progressbar_picture | progressbar_AtomicParsley
+                  --overWrite 1> $log2_file | progressbar_picture | progressbar_AtomicParsley
 
     if [[ $? -ne 0 ]]
     then
         zenity --warning \
-               --title "mkvtomp4" \
-               --window-icon="$icon" \
-               --text "$(gettext 'Artwork was not added.')"
+               --title "$title" \
+               --text "$(gettext 'Artwork was not added.')" \
+                 $zenity_settings
     fi
 fi
 }
@@ -339,14 +342,14 @@ while [ $# -gt 0 ]
 do
     case "$1" in
         --version | -v )
-            echo "mkvtomp4 version $version"
+            echo "$title version $version"
             exit
             ;;
 
         --help | -h )
-            echo "mkvtomp4 - GUI tool for converting mkv files to mp4"
+            echo "$title - GUI tool for converting mkv files to mp4"
             echo " "
-            echo "usage: mkvtomp4 [option]"
+            echo "usage: $title [option]"
             echo " "
             echo "options:"
             echo "  -h, --help                show this help"
