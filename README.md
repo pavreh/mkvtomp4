@@ -19,5 +19,6 @@ Supported operating systems
 * Ubuntu 17.10 Artful
 * Ubuntu 16.04 Xenial
 * Linux Mint 18
+* Linux Mint 19
 
 https://launchpad.net/~pavreh/+archive/ubuntu/ppa
