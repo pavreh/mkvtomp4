@@ -1,0 +1,21 @@
+Source: mkvtomp4
+Section: video
+Priority: optional
+Maintainer: Pavel Rehak <pavel-rehak@email.cz>
+Build-Depends: debhelper (>=9)
+Standards-Version: 3.9.7
+Homepage: https://github.com/pavreh/mkvtomp4
+
+Package: mkvtomp4
+Architecture: all
+Depends: ${misc:Depends}, zenity (>= 3.18.1.1), ffmpeg, atomicparsley, libnotify-bin
+Suggests:
+Description: GUI tool for converting mkv files to mp4
+ Mkvtomp4 can:
+  * Repack mkv to mp4 file,
+  * video si copied without converting,
+  * aac audio si copied without converting,
+  * other audio formats (mp3, ac3) are converted to aac,
+  * optionally, it is possible to add artwork.
+ .
+ Beta version.

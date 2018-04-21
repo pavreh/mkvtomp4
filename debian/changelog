@@ -1,0 +1,79 @@
+mkvtomp4 (0.3.2-1) xenial; urgency=medium
+
+  * Add libnotify-bin dependency.
+  * Set windows width and height.
+  * Only one instance is permitted.
+  * Add links to man page.
+  * Add copyright for icons.
+
+ -- Pavel Rehak <pavel-rehak@email.cz>  Sat, 21 Apr 2018 19:20:23 +0200
+
+mkvtomp4 (0.3.1-1) xenial; urgency=medium
+
+  * Add parameters --help and --version.
+  * Add man page.
+
+ -- Pavel Rehak <pavel-rehak@email.cz>  Tue, 17 Apr 2018 20:26:53 +0200
+
+mkvtomp4 (0.3.0-1ppa1) xenial; urgency=medium
+
+  * Delete the output mp4 file when cancel converting.
+  * Only language is visible when choosing audio.
+  * bug fix: Adding artwork is not aborted when cancel.
+
+ -- Pavel Rehak <pavel-rehak@email.cz>  Sun, 08 Apr 2018 17:08:58 +0200
+
+mkvtomp4 (0.2.2-1ppa1) xenial; urgency=medium
+
+  * bug fix: AAC 5.1 (mp4 with AAC 5.1 is not playable on some devices;
+             it is converted to stereo now).
+
+ -- Pavel Rehak <pavel-rehak@email.cz>  Sun, 08 Apr 2018 08:05:35 +0200
+
+mkvtomp4 (0.2.0-1ppa1) xenial; urgency=medium
+
+  * Added AudioVideo category to desktop file.
+  * Do not ask when only one audio stream.
+  * Clearer notifications.
+  * Less ffprobe usage.
+
+ -- Pavel Rehak <pavel-rehak@email.cz>  Sat, 07 Apr 2018 09:45:23 +0200
+
+mkvtomp4 (0.1.4-1ppa1) xenial; urgency=medium
+
+  * bug fix: Adding picture progressbar is not shown in some cases.
+  * bug fix: Infinitely loop when run from Software manager or Albert
+             launcher.
+  * Icon added.
+
+ -- Pavel Rehak <pavel-rehak@email.cz>  Sun, 25 Mar 2018 23:58:26 +0200
+
+mkvtomp4 (0.1.3-1ppa1) xenial; urgency=medium
+
+  * bug fix: Do not ask for overwrite the output file when there is a
+             white space in the name of the source file.
+  * bug fix: Convert progressbar does not close after converting in
+             some cases.
+
+ -- Pavel Rehak <pavel-rehak@email.cz>  Sat, 24 Mar 2018 19:18:49 +0100
+
+mkvtomp4 (0.1.2-1ppa1) xenial; urgency=medium
+
+  * bug fix: Do nothing when more than one video stream is present.
+  * bug fix: Ask for overwrite the output file.
+  * Mp4 files are visible but it is not possible to choose them.
+
+ -- Pavel Rehak <pavel-rehak@email.cz>  Sat, 24 Mar 2018 15:41:06 +0100
+
+mkvtomp4 (0.1.1-1ppa1) xenial; urgency=medium
+
+  * bug fix: typo
+  * bug fix: missing dependency: AtomicParsley
+
+ -- Pavel Rehak <pavel-rehak@email.cz>  Sat, 24 Mar 2018 03:12:22 +0100
+
+mkvtomp4 (0.1.0-1ppa1) xenial; urgency=medium
+
+  * Initial release
+
+ -- Pavel Rehak <pavel-rehak@email.cz>  Fri, 23 Mar 2018 22:18:45 +0100
