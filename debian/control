@@ -17,5 +17,3 @@ Description: GUI tool for converting mkv files to mp4
   * aac audio si copied without converting,
   * other audio formats (mp3, ac3) are converted to aac,
   * optionally, it is possible to add artwork.
- .
- Beta version.

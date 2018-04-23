@@ -1,8 +1,6 @@
 # mkvtomp4
 GUI tool for converting mkv files to mp4.
 
-Beta version
-
 ## Screenshot
 ![mkvtomp4](/git_files/screenshot.png?raw=true)
 
